@@ -1,5 +1,5 @@
 import {  Routes, Route, Navigate } from 'react-router-dom'
-import {lazy, suspense, useEffect, useState} from 'react'
+import {lazy, Suspense, useEffect, useState} from 'react'
 import useAuthStore from './lib/authStore'
 import Layout from './ui/Layout'
 import Home from './pages/Home'
@@ -35,7 +35,7 @@ export default function App() {
 
   
   return (
-    <suspense fallback={<LoadingScreen/>}>
+    <Suspense fallback={<LoadingScreen/>}>
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={<Home />} />
@@ -58,6 +58,6 @@ export default function App() {
         <Route path="about" element={<About />} />
       </Route>
     </Routes>
-</suspense>
+</Suspense>
   )
 }
