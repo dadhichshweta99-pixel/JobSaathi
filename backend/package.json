@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -10,12 +11,19 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@google/genai": "^1.51.0",
+    "@google/generative-ai": "^0.24.1",
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
+    "express-rate-limit": "^8.4.1",
     "firebase": "^12.12.1",
+    "http": "^0.0.1-security",
     "mongoose": "^9.5.0",
     "node-fetch": "^2.7.0",
-    "socket.io": "^4.8.3"
+    "pdf-parse-fork": "^1.2.0",
+    "pdf-parser": "^1.0.5",
+    "socket.io": "^4.8.3",
+    "url": "^0.11.4"
   }
 }

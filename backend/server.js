@@ -1,112 +1,124 @@
-const express = require("express");
-const http = require("http");
-const { Server } = require("socket.io");
-const cors = require("cors");
-require("dotenv").config();
+import dotenv from 'dotenv'
+dotenv.config()
 
-const fetch = require("node-fetch"); // ✅ REST API
+import express from 'express'
+import { createServer } from 'http'
+import { Server } from 'socket.io'
+import mongoose from 'mongoose'
+import cors from 'cors'
 
-const app = express();
-app.use(cors());
+import rateLimit from 'express-rate-limit'
+import path from 'path'
+import { fileURLToPath } from 'url'
 
-const server = http.createServer(app);
+import authRoutes from './routes/auth.js'
+import userRoutes from './routes/users.js'
+import jobRoutes from './routes/jobs.js'
+//import aiRoutes from './routes/ai.js'
+import router from './routes/ai.js'
 
-const io = new Server(server, {
+
+// checking  pid to know file are interconnected or connecting to another app file
+const __filename = fileURLToPath(import.meta.url)
+//console.log("server file", __filename)
+// console.log("PID:",process.pid);
+
+
+const __dirname = path.dirname(__filename)
+
+const app = express()
+const httpServer = createServer(app)
+
+// Socket.io
+const io = new Server(httpServer, {
   cors: {
-    origin: "*",
+    origin: process.env.FRONTEND_URL || 'http://localhost:1573',
+    methods: ['GET', 'POST'],
   },
-});
+})
 
-// ✅ Debug API key
-console.log("API KEY:", process.env.GEMINI_API_KEY);
+io.on('connection', (socket) => {
+  console.log('Client connected:', socket.id)
+  socket.on('disconnect', () => console.log('Client disconnected:', socket.id))
+})
 
-// ✅ Gemini REST API function
-async function getAIResponse(msg) 
-{
-  const API_KEY = process.env.GEMINI_API_KEY;
 
-  const body = {
-    contents: [
-      {
-        parts: [{ text: `You are a career assistant.\nUser: ${msg}` }],
-      },
-    ],
-  };
 
-  // 🔹 Try primary model
-const res = await fetch(
-    `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash-001:generateContent?key=${API_KEY}`,
-    {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(body),
-    }
-  );
 
-  const data = await res.json();
-console.log("Gemini RAW:",data);
-  // 🔹 If model not found, fallback
- if (data.error) {
-  console.log("Gemini Error:", data.error.message);
-  return "AI service not available right now.";
+// Make io accessible in routes
+app.set('io', io)
+
+// Middleware
+app.use(cors({
+  origin: true,
+  credentials: true,
+}))
+app.use(express.json({ limit: '10mb' }))
+app.use(express.urlencoded({ extended: true, limit: '10mb' }))
+
+
+
+// Rate limiting
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100,
+  message: { message: 'Too many requests, please try again later.' },
+})
+app.use('/api/', limiter)
+
+// Stricter limit for AI routes (they cost money)
+const aiLimiter = rateLimit({
+  windowMs: 60 * 1000, // 1 minute
+  max: 10,
+  message: { message: 'AI request limit reached. Please wait a moment.' },
+})
+app.use('/api/ai', aiLimiter)
+
+
+
+// API Routes
+app.use('/api/auth', authRoutes)
+app.use('/api/users', userRoutes)
+app.use('/api/jobs', jobRoutes)
+app.use('/api/ai', router)
+
+// Health Check
+app.get('/api/health', (req, res) => {
+  res.json({ status: 'ok', timestamp: new Date().toISOString() })
+})
+//test  route
+app.get("/",(req,res)=> {
+  res.send("Backend running");
+})
+// Serve uploads
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')))
+
+// Production: serve frontend build
+if (process.env.NODE_ENV === 'production') {
+  const frontendPath = path.join(__dirname, '../frontend/dist')
+  app.use(express.static(frontendPath))
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(frontendPath, 'index.html'))
+  })
 }
 
-  return 
-    data.candidates[0].content.parts[0].text ;
-   
-  
-}
-
-  // debug
-
-  
+// search , Jsearch
 
 
-// ✅ Test route
-app.get("/", (req, res) => {
-  res.send("Backend running 🚀");
-});
+// Connect DB and start server
+const PORT = process.env.PORT || 5000
 
-// ✅ Socket logic
-io.on("connection", (socket) => {
-  console.log("User connected:", socket.id);
+mongoose
+  .connect(process.env.MONGO_URI)
+  .then(() => {
+    console.log('✅ MongoDB connected')
+    httpServer.listen(PORT, () => {
+      console.log(`🚀 JobSaathi server running on port ${PORT}`)
+    })
+  })
+  .catch((err) => {
+    console.error('❌ MongoDB connection error:', err.message)
+    process.exit(1)
+  })
 
-  socket.on("send_message", async (msg) => {
-    try {
-      console.log("User message:", msg);
-
-      // 👤 show user message
-      io.emit("receive_message", {
-        sender: "user",
-        text: msg,
-      });
-
-      // 🤖 AI response
-      const aiReply = await getAIResponse(msg);
-
-      console.log("AI reply:", aiReply);
-
-      io.emit("receive_message", {
-        sender: "ai",
-        text: aiReply,
-      });
-
-    } catch (err) {
-      console.log("ERROR:", err);
-
-      io.emit("receive_message", {
-        sender: "ai",
-        text: "AI not responding. Try again.",
-      });
-    }
-  });
-
-  socket.on("disconnect", () => {
-    console.log("User disconnected");
-  });
-});
-
-// ✅ Start server
-server.listen(5000, () => {
-  console.log("Server running on http://localhost:5000");
-});
+export default app

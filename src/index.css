@@ -1,3 +1,111 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* ================= THEME ================= */
+:root {
+  --background: #F9FAFB;
+  --foreground: #1E293B;
+
+  --primary: #7C3AED;      /* Purple */
+  --secondary: #EC4899;    /* Pink */
+
+  --card: #FFFFFF;
+  --accent: #F3E8FF;
+
+  --border: #E5E7EB;
+  --input: #E5E7EB;
+
+  --radius: 12px;
+}
+
+/* Optional Dark Mode */
+.dark {
+  --background: #0f172a;
+  --foreground: #f8fafc;
+  --card: #0f172a;
+
+  --primary: #a78bfa;
+  --secondary: #f472b6;
+
+  --accent: #1e293b;
+  --border: #334155;
+}
+
+/* ================= BASE ================= */
+@layer base {
+  body {
+    @apply bg-[var(--background)] text-[var(--foreground)];
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: 'Syne', sans-serif;
+  }
+ 
+  h1 {
+    @apply mb-6 leading-tight;
+  }
+
+  h2 {
+    @apply mb-4 leading-snug;
+  }
+
+  p {
+    @apply mb-4 leading-relaxed;
+  }
+}
+
+
+/* ================= COMPONENTS ================= */
+@layer components {
+
+  /* Primary Button */
+  .btn-primary {
+    @apply px-6 py-3 rounded-full text-white font-medium transition;
+    background: linear-gradient(to right, var(--primary), var(--secondary));
+  }
+
+  
+  /* Secondary Button */
+  .btn-secondary {
+    @apply px-6 py-3 rounded-full font-medium transition;
+    background: var(--card);
+    border: 1px solid var(--border);
+    color: var(--primary);
+  }
+
+  /* Card */
+  .card {
+    @apply p-5 rounded-xl shadow-sm;
+    background: var(--card);
+    border: 1px solid var(--border);
+  }
+
+  /* Input */
+  .input-field {
+    @apply w-full px-4 py-3 rounded-lg text-sm;
+    border: 1px solid var(--input);
+    background: var(--card);
+    color: var(--foreground);
+  }
+
+  /* Badge */
+  .badge {
+    @apply text-xs px-3 py-1 rounded-full;
+    background: var(--accent);
+    color: var(--primary);
+  }
+
+  /* Gradient Text */
+  .grad-text {
+    background: linear-gradient(to right, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    color: transparent;
+  }
+
+  /* Layout */
+  .container {
+    @apply max-w-7xl mx-auto px-4;
+  }
+}
