@@ -93,14 +93,7 @@ app.get("/",(req,res)=> {
 // Serve uploads
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')))
 
-// Production: serve frontend build
-if (process.env.NODE_ENV === 'production') {
-  const frontendPath = path.join(__dirname, '../frontend/dist')
-  app.use(express.static(frontendPath))
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(frontendPath, 'index.html'))
-  })
-}
+
 
 // search , Jsearch
 
