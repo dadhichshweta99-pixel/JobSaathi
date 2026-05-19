@@ -122,7 +122,7 @@ export default function Dashboard() {
           {/* STATS */}
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
             <StatCard label="Saved Jobs" value={data.stats.saved || 0} color="bg-purple-100" />
-            <StatCard label=" ATS Match %" value={data.stats.avgMatch || 0} color="bg-yellow-100" />
+            <StatCard label=" ATS Match %" value={data.stats.matchScore || 0} color="bg-yellow-100" />
           </div>
 
           {/* PROFILE COMPLETION */}

@@ -11,7 +11,7 @@ export default function Layout({ children }) {
 
       {/* MAIN CONTENT */}
       <main className="flex-1">
-        {children}
+        <Outlet/>
       </main>
 <Outlet/>
       {/* FOOTER */}

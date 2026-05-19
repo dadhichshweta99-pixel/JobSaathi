@@ -33,7 +33,7 @@ router.get('/stats', protect, async (req, res) => {
     
     //  views: user.profileViews,
     //  avgMatch: user.skills.length > 0 ? Math.min(95, 50 + user.skills.length * 3) : 0,
-    avgMatch: user.matchScore || 0,
+    matchScore: user.matchScore || 0,
     })
   } catch (err) {
     res.status(500).json({ message: err.message })
