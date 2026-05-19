@@ -31,12 +31,12 @@ const userSchema = new mongoose.Schema(
     company: String,
     location: String,
     jobId: String,
-    matchScore:{
+    
+  },
+], matchScore:{
   type: Number,
   default : 0,
-}
-  },
-], 
+},
 
   },
   { timestamps: true }

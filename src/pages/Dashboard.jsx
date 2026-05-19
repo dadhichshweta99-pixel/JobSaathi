@@ -66,7 +66,7 @@ export default function Dashboard() {
           api.get("/users/stats"),
           api.get("/users/saved-jobs")
         ])
-
+console.log("STATS RESPONSE:", statsRes.data)
         setData({
           stats: statsRes.data,
           savedJobs: savedRes.data.jobs || [],
