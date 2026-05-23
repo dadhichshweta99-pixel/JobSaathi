@@ -1,16 +1,115 @@
-# React + Vite
+JobSaathi 🚀
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+JobSaathi is an AI-powered career and job assistance platform designed to simplify the job search journey for students, freshers, and professionals. The platform helps users discover relevant job opportunities, analyze resumes, and receive personalized career guidance through features like Resume Analysis, Job Match AI, Interview Preparation, Career Roadmap Suggestions, and Salary Insights. Users can search jobs based on skills and interests while getting AI-driven recommendations and career support.
 
-Currently, two official plugins are available:
+JobSaathi aims to bridge the gap between candidates and opportunities by combining modern web technologies with intelligent assistance.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+The application is built using the MERN stack with React.js, Node.js, Express.js, MongoDB, JWT Authentication, REST APIs, Tailwind CSS, and AI integrations to provide a scalable and user-friendly experience.
 
-## React Compiler
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-## Expanding the ESLint configuration
+# Frontend Link 
+https://jobsaathi-f.vercel.app/
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+# Backend Link
+https://jobsaathi-nfjr.onrender.com
+
+# User Features
+User Registration & Login,
+Secure JWT Authentication,
+Search Jobs by Title & Location,
+Apply for Jobs,
+View Applied Jobs,
+Responsive UI,
+AI Chat Assistance,
+User Dashboard
+
+# Future User Features
+Search Jobs by Keyword,
+Real-time Feedback & Notification
+
+# Future Recruiter Features
+Recruiter Authentication,
+Post New Jobs,
+Update/Delete Job Posts,
+Manage Candidates,
+Recruiter Dashboard,
+Track Applications,
+
+# General Features
+REST API Architecture,
+Protected Routes,
+Role-Based Access Control,
+MongoDB Database Integration,
+Error Handling,
+API Integration using Axios,
+Modern UI Design,
+Deployment Ready
+
+
+🛠️ Tech Stack
+
+# Frontend
+React.js, Vite, Tailwind CSS, Axios, React Router DOM
+# Backend
+Node.js, Express.js, MongoDB, Mongoose, JWT Authentication, bcrypt.js, dotenv, CORS
+# Deployment
+Vercel(Frontend), Render(Backend), MongoDB Atlas
+
+📜  folders
+
+# Project Strucutre
+JS/
+|
+|-- backend/
+|  |-- middleware/
+|  |-- models/       # Backend Application
+|  |-- routes/
+|  |-- utils/
+|  |-- server.js
+|
+|-- src/
+|   |-- assets/
+|   |-- components/ 
+|   |-- lib/        # Frontend Application
+|   |-- pages/ 
+|   |-- ui/
+|   
+|-- app.jsx
+|-- config.js
+|-- package.json
+|-- README.md
+
+
+## Screeshots
+![Home](home.png)
+![jobs](jobs.png)
+![AIAssistant](ai-assistant.png)
+![Dashboard](dashboard.png)
+
+
+
+# Installation
+```bash
+git clone -> https://github.com/dadhichshweta99-pixel/JobSaathi.git
+cd js
+npm install
+npm run dev
+```
+
+# Environment Variables
+
+# Run Locally
+FRONTEND_URL=http://localhost:1573
+BACKEND_URL=http://localhost:5000
+
+
+## 👩‍💻 Author
+
+**Shweta Dadhich**
+MERN Stack Developer
+
+-GitHub: https://github.com/dadhichshweta99-pixel
+
+-LinkedIn: https://www.linkedin.com/in/shweta-dadhich-7670b1192?utm_source=share_via?utm_content=profile&utm_medium=member_android
+

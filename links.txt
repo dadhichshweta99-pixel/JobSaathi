@@ -1,0 +1,2 @@
+vercel(frontend ) -> https://jobsaathi-oc5pjm6to-shweta-d-projects.vercel.app
+onrender(backend) -> https://jobsaathi-nfjr.onrender.com
